@@ -1,0 +1,8 @@
+.qodo
+uploads
+__pycache__
+
+# Ignore virtual environment
+venv/
+*.dll
+*.libvenv/ 
