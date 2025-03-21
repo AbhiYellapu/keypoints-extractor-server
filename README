@@ -1,0 +1,83 @@
+# Keypoints Extractor Server
+
+## Overview
+
+This server extracts key information from audio or video files by converting the audio to text and then identifying key points within the transcribed text. It supports various audio and video formats, including MP3, WAV, MP4, AVI, MOV, and MKV.
+
+## Features
+
+-   **Audio Extraction:** Extracts audio from video files.
+-   **Format Conversion:** Converts audio files to WAV format.
+-   **Audio Chunking:** Splits large audio files into smaller chunks for processing.
+-   **Speech-to-Text Conversion:** Converts audio chunks to text using Google Speech Recognition.
+-   **Keypoint Extraction:** Identifies and extracts key points from the transcribed text (Note: The keypoint extraction logic needs to be implemented).
+
+## Requirements
+
+-   Python 3.6+
+-   pydub
+-   SpeechRecognition
+-   moviepy (for video processing)
+-   torch
+-   transformers
+-   flask
+-   flask-cors
+
+### Initial Installation
+
+1.  **Create a virtual environment (recommended):**
+
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Linux/macOS
+    venv\Scripts\activate  # On Windows
+    ```
+
+2.  **Install the required packages:**
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+You can install the necessary packages using pip:
+
+```bash
+pip install pydub SpeechRecognition moviepy
+```
+
+## Usage
+
+1.  **Upload File:** Send a POST request to the server's endpoint with the audio or video file.
+2.  **Processing:** The server extracts the audio, converts it to text, and identifies key points.
+3.  **Response:** The server returns the extracted key points.
+
+## Endpoints
+
+-   **/api/keypoints-extractor:** Accepts audio or video files for processing.
+
+    -   **Method:** POST
+    -   **Request Body:** `file`: The audio or video file to be processed. The file should be sent as `multipart/form-data`.
+    -   **Response:**
+        -   **Success:** Returns the extracted key points and text.
+        -   **Failure:** Returns an error message.
+
+## Code Structure
+
+-   `utils.py`: Contains utility functions for audio processing, format conversion, and speech-to-text conversion.
+-   `app.py` (assumed): Contains the Flask application and API endpoints.
+
+## Utility Functions (`utils.py`)
+
+-   `split_audio(audio_path, chunk_length=60)`: Splits an audio file into smaller chunks.
+    -   `audio_path`: Path to the audio file.
+    -   `chunk_length`: Length of each chunk in seconds (default: 60).
+-   `convert_audio_to_text(audio_chunks)`: Converts audio chunks to text using Google Speech Recognition.
+    -   `audio_chunks`: List of audio chunk file paths.
+-   `extract_audio(video_or_audio_path)`: Extracts audio from a video file or converts an audio file to WAV format.
+    -   `video_or_audio_path`: Path to the video or audio file.
+
+## Future Enhancements
+
+-   Add support for more speech recognition services.
+-   Improve error handling and logging.
+-   Add unit tests.
